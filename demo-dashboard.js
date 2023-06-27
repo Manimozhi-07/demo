@@ -27,13 +27,20 @@ require.config({
 require(["js/qlik"], function (qlik) {
   var app = qlik.openApp("a92e83cb-98b5-4c02-9dad-753067b309bd", config);
   var app1 = qlik.openApp("509332f9-1461-4a37-8b3f-84eab2666ec4", config);
+  var app2=qlik.openApp("745e4bbe-8613-4999-b89f-8da89ed7985b",config);
   app1.getObject("ob", "fxyuxvp");
-  // app1.getObject("kpi1", "JRNGq");
-  // app1.getObject("kpi2", "PUpAQty");
-  // app1.getObject("kpi3", "sKDevh");
-  app1.getObject("kpi4", "sKDevh");
+  app1.getObject("kpi1", "JRNGq");
+  app1.getObject("kpi2", "PUpAQty");
+  app1.getObject("kpi3", "sKDevh");
+  app2.getObject("kpi4", "jkzTx");
+  app2.getObject("kpi5","PhSaEN");
+  app2.getObject("kpi6","PhSaEN");
   app1.getObject("pie", "cXahBQ");
-  // app.getObject("table", "pvJDPB");
+  app1.getObject("lc1","JRVHPjJ");
+  app1.getObject("lc2","nrEGj");
+  app1.getObject("lc3","JRVHPjJ");
+  app1.getObject("lc4","JRVHPjJ");
+  app.getObject("table", "pvJDPB");
   app.getObject("chartobj", "tTZQUX");
   //callbacks -- inserted here --
   function CustomTable(reply, app) {
@@ -49,12 +56,6 @@ require(["js/qlik"], function (qlik) {
        
         $("#customTable").append(html);
       }
-      // $("td").css({
-      //   height: "10%",
-      //   "background-color": "var(--grey)",
-      //   width: "30%",
-      //   padding: "10px",
-      // });
      
     });
   }

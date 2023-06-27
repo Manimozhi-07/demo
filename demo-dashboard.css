@@ -4,6 +4,10 @@
   --primary: #7545fb;
   --font-color: #727272;
   --search: #e6e6e6;
+  --green: green;
+  --positive: #bfebbf;
+  --red: red;
+  --negative: #f1caca;
 }
 * {
   margin: 0;
@@ -17,6 +21,8 @@ body {
 }
 #wrapper {
   display: flex;
+  width: 100%;
+  height: 100%;
 }
 #sidebar {
   padding: 20px;
@@ -25,7 +31,6 @@ body {
   background-color: var(--white);
 }
 #brand {
-  margin-bottom: 20px;
   padding: 5px;
   font-size: 20px;
   font-weight: bolder;
@@ -34,7 +39,9 @@ body {
   color: var(--primary);
   -webkit-text-stroke: 0.5px;
 }
-
+#list {
+  padding: 10px 0px;
+}
 #list ul {
   list-style: none;
   display: flex;
@@ -174,10 +181,11 @@ body {
   border-radius: 10px;
 }
 .kpihead {
-  padding: 10px 20px;
+  padding: 10px;
   display: flex;
   gap: 10px;
   align-items: center;
+  height: 40%;
 }
 .kpiicon {
   width: 30px;
@@ -194,10 +202,33 @@ body {
   font-size: 14px;
   font-weight: bold;
 }
-.obj {
-  width: 100%;
+.kpibody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 60%;
+  width: 100%;
   padding: 10px;
+  gap: 0px;
+}
+.obj {
+  width: 70%;
+  height: 100%;
+}
+.stock {
+  width: 30%;
+  padding: 5px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.positive {
+  color: var(--green);
+  background-color: var(--positive);
+}
+.negative {
+  color: var(--red);
+  background-color: var(--negative);
 }
 #chart {
   width: 100%;
@@ -206,21 +237,118 @@ body {
   border-radius: 10px;
   display: flex;
 }
+#left {
+  width: 33.3%;
+  height: 100%;
+  border-right: 2px solid var(--grey);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
 #kpi4 {
-  width: 40%;
+  width: 100%;
+  height: 30%;
+}
+.foot {
+  display: flex;
+  width: 100%;
+  height: 40%;
+  gap: 20px;
+  font-size: 12px;
+}
+.footdata {
+  width: 50%;
+  height: 100%;
+  padding: 5px;
+}
+#income {
+  border-right: 1px solid var(--search);
+}
+.head i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  padding: 4px;
+}
+.dataobj {
+  height: 80%;
+  width: 100%;
+  font-weight: bold;
+  padding: 10px;
+}
+.sn-kpi .sn-kpi-center {
+  justify-content: start !important;
+}
+#middle {
+  width: 33.3%;
   height: 100%;
   padding: 10px;
-  border-right: 1px solid var(--grey);
 }
 #pie {
-  width: 60%;
-  height: 100%;
-}
-#card-header {
+  width: 100%;
+  height: 90%;
   padding: 10px;
-  height: 15%;
+}
+#right {
+  width: 33.3%;
+  height: 100%;
+  padding: 10px;
+}
+.card-header {
   font-size: 14px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+.t {
+  font-size: 14px;
+  font-weight: bold;
+}
+#currency {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+.curr-row {
+  width: 100%;
+  height: 33.3%;
+  display: flex;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: center;
+}
+.curr-col1 {
+  width: 70%;
+  height: 100%;
+  font-weight: bold;
+  font-size: 13px;
+  font-weight: bold;
+}
+.curr-col1 i,
+.bcw15 .brand {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  text-align: center;
+  padding: 6px;
+  color: var(--white);
+}
+.curr-col2 {
+  width: 30%;
+
+  font-size: 12px;
+}
+#monthdd {
+  border: none;
+  outline: none;
+}
+#monthdd option:hover {
+  background-color: var(--primary);
 }
 #ob {
   width: 100%;
@@ -229,7 +357,7 @@ body {
 }
 #tabs {
   display: flex;
-  gap: 15px;
+  gap: 20px;
   font-size: 14px;
   padding: 10px;
   color: var(--font-color);
@@ -247,13 +375,12 @@ body {
   height: 90%;
   padding: 10px;
 }
-/* #summary.activetab-content {
-  display:flex;
+#summary.activetab-content {
+  display: flex;
   flex-direction: column;
-  gap:15px;
- 
-} */
-#customTable {
+  gap: 15px;
+}
+/* #customTable {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -266,57 +393,125 @@ tr {
   width: 100%;
   height: 20%;
   background-color: var(--grey);
- padding:20px;
- border-radius: 20px;
- display:flex;
- gap:50px;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  gap: 50px;
 }
 td {
-
   width: 150px;
-}
-/* .b{
-  width:100%;
-  height:20%;
-  border-radius: 20px;
+} */
+.b {
+  width: 100%;
+  height: 20%;
+  border-radius: 10px;
   background-color: var(--grey);
-  display:flex;
-  gap:10px;
+  display: flex;
+  gap: 10px;
   padding: 10px;
-   
-
+  align-items: center;
+  justify-content: center;
 }
-.bcw15{
-  width:15%;
+.bcw15 {
+  width: 15%;
 }
-.bcw25{
-  width:25%;
+.title {
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
 }
-.buttonbox{
+.val {
+  color: var(--font-color);
+  font-size: 12px;
+  font-weight: bold;
+}
+.white {
+  color: white;
+}
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+.bcw25 {
+  width: 25%;
+  height: 100%;
+}
+.buttonbox {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap:15px;
+  gap: 15px;
 }
-.buttonbox .button{
-  padding:2px 10px;
-  border:none;
-  outline:none;
-  border-radius:5px;
+.buttonbox .button {
+  padding: 2px 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
 }
-.activebtn{
+.activebtn {
   background-color: var(--primary);
-  color:var(--white);
+  color: var(--white);
 }
-.sellbtn{
+.sellbtn {
   background-color: var(--white);
-  color:var(--primary);
-} */
+  color: var(--primary);
+}
 @media screen and (min-width: 1200px) and (max-width: 1550px) {
   #sidebar {
     width: 16%;
   }
   #content {
     width: 84%;
+  }
+}
+
+@media screen and (min-width:1111px) and (max-width: 1199px) {
+  #sidebar {
+    width: 7%;
+  }
+  #list span,
+  #brand span {
+    display: none;
+  }
+  #list a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #list i.activelist {
+    width: 35px;
+    height: 35px;
+  }
+  #content {
+    width: 93%;
+  }
+}
+@media screen and (min-width:991px)and (max-width:1110px){
+  #wrapper{
+    display:block;
+  
+  }
+ #brand{
+  text-align: center;
+ }
+  #sidebar{
+    width:100%;
+    height:100%;
+    
+  }
+#list{
+  text-align: center;
+}
+#list ul{
+  display: inline-block;
+  text-align: left;
+  
+}
+
+  #content{
+    width:100%;
   }
 }
