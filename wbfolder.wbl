@@ -2,4 +2,5 @@ demo-dashboard.qext;
 demo-dashboard.html;
 demo-dashboard.js;
 demo-dashboard.css;
-user.jpg
+user.jpg;
+object.json
