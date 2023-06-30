@@ -25,7 +25,7 @@
     />
     <!-- RequireJS -->
     <script src="../../resources/assets/external/requirejs/require.js"></script>
-
+    <script src="/resources/assets/external/requirejs/require-config.js"></script>
     <!--custom css-->
     <link rel="stylesheet" href="demo-dashboard.css" />
   </head>
@@ -204,10 +204,10 @@
                 </div>
                 <div id="right">
                   <div class="t" style="text-align: center">
-                    <span> 3 Currencies</span>
+                    <span> 4 Currencies</span>
                   </div>
-                  <div id="currency">
-                    <div class="curr-row">
+                  <table id="currency">
+                    <!-- <div class="curr-row">
                       <div class="curr-col1">
                         <i
                           class="fa-brands fa-bitcoin"
@@ -248,8 +248,8 @@
                           ><i class="fa-solid fa-arrow-up">&nbsp;</i>1.32%</span
                         >
                       </div>
-                    </div>
-                  </div>
+                    </div> -->
+                  </table>
                 </div>
               </div>
             </div>
@@ -286,8 +286,38 @@
               <span>Analysis</span>
             </div>
             <div class="tab-content activetab-content" id="summary">
-              <div class="b">
-                <div class="bcw15">
+              <div class="tabledatacont">
+                <!-- <div class="tabledata" id="tabledata0"></div>
+                <div class="tabledata" id="tabledata1"></div>
+                <div class="tabledata" id="tabledata2"></div>
+                <div class="tabledata" id="tabledata3"></div> -->
+                <canvas class="tabledata" id="tabledata0"></canvas>
+                <canvas class="tabledata" id="tabledata1"></canvas>
+                <canvas class="tabledata" id="tabledata2"></canvas>
+                <canvas class="tabledata" id="tabledata3"></canvas>
+               
+              </div>
+              <div id="buttonsdiv">
+                <div class="buttonbox">
+                  <button class="button sellbtn">Sell</button>
+                  <button class="button activebtn">Buy</button>
+                </div>
+                <div class="buttonbox">
+                  <button class="button sellbtn">Sell</button>
+                  <button class="button activebtn">Buy</button>
+                </div>
+                <div class="buttonbox">
+                  <button class="button sellbtn">Sell</button>
+                  <button class="button activebtn">Buy</button>
+                </div>
+                <div class="buttonbox">
+                  <button class="button sellbtn">Sell</button>
+                  <button class="button activebtn">Buy</button>
+                </div>
+
+              </div>
+              <!--<div class="b">
+                 <div class="bcw15">
                   <i
                     class="fa-brands fa-bitcoin brand"
                     style="background-color: orange" 
@@ -389,7 +419,7 @@
                   <button class="button sellbtn">Sell</button>
                   <button class="button activebtn">Buy</button>
                 </div>
-              </div>
+              </div> -->
               <!-- <table id="customTable"></table> -->
             </div>
             <div class="tab-content" id="table"></div>
@@ -406,5 +436,6 @@
       </div>
     </div>
     <script src="demo-dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   </body>
 </html>

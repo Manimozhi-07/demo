@@ -1,12 +1,14 @@
 {
-    "maindata1":"Avg(Sales)",
-    "subdata1":"Sum(Quantity)",
-    "maindata2":"Avg(Sales)",
-    "subdata2":"Sum(Quantity)",
-    "maindata3":"Avg(Sales)",
-    "subdata3":"Sum(Quantity)",
-    "kpi4":"Avg(Sales)",
-  
-    "kpi5":"Count(Product)",
-    "kpi6":"Sum(Quantity)"
+  "Data":{
+    "maindata1": "Avg(Sales)",
+    "subdata1": "Sum(Quantity)",
+    "maindata2": "Avg(Sales)",
+    "subdata2": "Count(Product)",
+    "maindata3": "Avg(UnitPrice)",
+    "subdata3": "Max(UnitPrice)",
+    "kpi4": "Avg(Sales)",
+    "kpi5": "Max(Sales)",
+    "kpi6": "Min(Sales)"
+   }
+
 }

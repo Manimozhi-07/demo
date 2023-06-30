@@ -27,14 +27,9 @@ require.config({
 require(["js/qlik"], function (qlik) {
   var app = qlik.openApp("a92e83cb-98b5-4c02-9dad-753067b309bd", config);
   var app1 = qlik.openApp("509332f9-1461-4a37-8b3f-84eab2666ec4", config);
+  var tableapp = qlik.openApp("36d5ea82-cd8a-429f-9bd2-0fba39580bb9", config);
   var app2 = qlik.openApp("745e4bbe-8613-4999-b89f-8da89ed7985b", config);
-  app1.getObject("ob", "fxyuxvp");
-  // app1.getObject("kpi1", "JRNGq");
-  // app1.getObject("kpi2", "PUpAQty");
-  // app1.getObject("kpi3", "sKDevh");
-  // app2.getObject("kpi4", "jkzTx");
-  // app2.getObject("kpi5", "PhSaEN");
-  // app2.getObject("kpi6", "PhSaEN");
+  // app1.getObject("ob", "fxyuxvp");
   app1.getObject("pie", "cXahBQ");
   app1.getObject("lc1", "JRVHPjJ");
   app1.getObject("lc2", "nrEGj");
@@ -42,98 +37,185 @@ require(["js/qlik"], function (qlik) {
   app1.getObject("lc4", "JRVHPjJ");
   app.getObject("table", "pvJDPB");
   app.getObject("chartobj", "tTZQUX");
-  //callbacks -- inserted here --
 
-  // function kpi4(reply, app) {
-  //   $.each(reply.qHyperCube.qDataPages[0].qMatrix, function (k, val) {
-  //     function data() {
-  //       var html = "<span>" + val[1].qText + "</span>";
-  //       return html;
-  //     }
-  //     if (val[0].qText === "Men's Clothes") {
-  //       $("#kpi4").append(data());
-  //     }
-  //     // else if(val[0].qText === "Sportswear"){
+  app.visualization
+    .create(
+      "linechart",
+      ["Product Category", "OrderDate.autoCalendar.Month", "=Avg([Sales])"],
+      {
+        lineType: "area",
+        nullMode: "connect",
+        dataPoint: {
+          show: true,
+          showLabels: true,
+        },
+      }
+    )
+    .then(function (visual) {
+      console.log(visual);
+      visual.show("ob");
+    });
 
-  //     //   $("#kpi1").append(data());
-  //     // }
-  //   });
-  //   console.log(reply);
-  // }
+  var tableProperties = {
+    qInfo: {
+      qType: "table",
+    },
+    qHyperCubeDef: {
+      qDimensions: [
+        {
+          qDef: {
+            qFieldDefs: ["Currency"],
+          },
+        },
+        {
+          qDef: {
+            qFieldDefs: ["Currency Code"],
+          },
+        },
+        {
+          qDef: {
+            qFieldDefs: ["24 hr change"],
+          },
+        },
+      ],
 
-  // app.createCube(
-  //   {
-  //     qInitialDataFetch: [
-  //       {
-  //         qHeight: 20,
-  //         qWidth: 2,
-  //       },
-  //     ],
-  //     qDimensions: [
-  //       {
-  //         qDef: {
-  //           qFieldDefs: ["Product Category"],
-  //         },
-  //         qNullSuppression: true,
-  //         qOtherTotalSpec: {
-  //           qOtherMode: "OTHER_OFF",
-  //           qSuppressOther: true,
-  //           qOtherSortMode: "OTHER_SORT_DESCENDING",
-  //           qOtherCounted: {
-  //             qv: "5",
-  //           },
-  //           qOtherLimitMode: "OTHER_GE_LIMIT",
-  //         },
-  //       },
-  //     ],
-  //     qMeasures: [
-  //       {
-  //         qDef: {
-  //           qDef: "Count(Product)",
-  //         },
+      qInitialDataFetch: [
+        {
+          qTop: 0,
+          qHeight: 4, // Number of rows to retrieve
+          qLeft: 0,
+          qWidth: 3, // Number of columns to retrieve
+        },
+      ],
+    },
+  };
+  tableapp.createGenericObject(tableProperties, function (reply) {
+    var tableData = reply.qHyperCube.qDataPages[0].qMatrix;
+    console.log(tableData);
+    $.each(reply.qHyperCube.qDataPages[0].qMatrix, function (k, val) {
+      if (k < 3) {
+        var html =
+          "<tr><td>" +
+          val[0].qText +
+          "<br>" +
+          val[1].qText +
+          "</td>" +
+          "<td style='color:" +
+          (val[2].qNum > 0 ? "green" : "red") +
+          "'>" +
+          val[2].qText +
+          "</td></tr>";
 
-  //         qLabel: "Product",
+        $("#currency").append(html);
+      }
+    });
+  });
 
-  //         qLibraryId: null,
-  //         qSortBy: {
-  //           qSortByState: 0,
-  //           qSortByFrequency: 0,
-  //           qSortByNumeric: 0,
-  //           qSortByAscii: 1,
-  //           qSortByLoadOrder: 0,
-  //           qSortByExpression: 0,
-  //           qExpression: {
-  //             qv: " ",
-  //           },
-  //         },
-  //       },
-  //     ],
-  //     qSuppressZero: false,
-  //     qSuppressMissing: false,
-  //     qMode: "S",
-  //     qInterColumnSortOrder: [],
-  //     qStateName: "$",
-  //   },
-  //   kpi4
-  // );
+  app.getObjectProperties("pvJDPB").then(function (model) {
+    model
+      .getHyperCubeData("/qHyperCubeDef", [
+        { qTop: 0, qLeft: 0, qWidth: 12, qHeight: 100 },
+      ])
+      .then((d) => {
+        console.log(d[0].qMatrix); //8
+        $.each(d[0].qMatrix, function (k, value) {
+          if (k < 4) {
+            console.log(value[3].qMiniChart.qMatrix); //12
+            var xValue ;
+            value[3].qMiniChart.qMatrix.map(function (val) {
+               xValue = val[0].qText;
+              var yValue = val[1].qNum;
+              console.log(xValue);
+              console.log(xValue, yValue);
+            });
+            
 
- 
-  //single value
+            // Extract X and Y values from data points
+            // const xValues = dataPoints.map(function (point) {
+            //   console.log(point.x);
+            //   return point.x;
+            // });
 
-  // async function test(objectId) {
-  //   var object = await app2.getObject(objectId);
-  //   var layout = await object.getLayout();
+            // const yValues = dataPoints.map(function (point) {
+            //   return point.y;
+            // });
+            // $.each(xValues,function(xValue){
+            //   xAxis.push(xValue);
+            // });
+            // Create the mini chart using Qlik Sense visualization API
+            // const chartOptions = {
+            //   title: "Mini Chart",
+            //   type: "linechart", // Adjust the chart type as needed
+            //   dimensions: {
+            //     min: 2,
+            //     max: 2,
+            //   },
+            //   measures: {
+            //     min: 2,
+            //     max: 2,
+            //   },
+            //   data: {
+            //     targets: [0],
+            //     rows: [
+            //       xValues.map(function (xValue) {
+            //         console.log(xValue);
+            //         xAxis.append(xValue);
+            //         return {
+            //           qText: xValue,
+            //         };
+            //       }),
+            //       yValues.map(function (yValue) {
+            //         console.log(yValue);
+            //         return {
+            //           qNum: yValue,
+            //         };
+            //       }),
+            //     ],
+            //   },
+            // };
 
-  //   console.log(layout);
-  //   return layout.qHyperCube.qDataPages[0].qMatrix[0][0].qNum;
-  // }
-  // async function value(objectId,id) {
-  //   var html = "<span>" + (await test(objectId)) + "</span>";
-  //   $(id).append(html);
-  // }
-  // value("jkzTx","#kpi4");
-  // value("PhSaEN","#kpi5");
-  // value("PhSaEN","#kpi6");
+            // const xAxis = [];
+            // console.log(xAxis);
+            // const yAxis = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+            // new Chart("tabledata" + k, {
+            //   type: "line",
+            //   data: {
+            //     labels: xAxis,
+            //     datasets: [
+            //       {
+            //         fill: false,
+            //         lineTension: 0,
+            //         backgroundColor: "rgba(0,0,255,1.0)",
+            //         borderColor: "rgba(0,0,255,0.1)",
+            //         data: yAxis,
+            //       },
+            //     ],
+            //   },
+            // });
+            // console.log(
+            //   value[0].qText,
+            //   value[1].qNum,
+            //   value[6].qNum,
+            //   value[7].qNum
+            // );
+            // const dataval = "<tr><td>" + value[0].qText + "</td>" + "<td>";
+          }
+          
+        });
+      
+      });
+  });
+
+  // Get the table data
+  // hypercubeObject.getHyp('/qHyperCubeDef', [{ qTop: 0, qLeft: 0, qWidth: 10, qHeight: 100 }]).then(data => {
+  // console.log(data);
+  //   // const tbldata = data.qDataPages[0].qMatrix;
+  //   // console.log(tbldata);
+  // }).catch(error => {
+  //   console.error('Error retrieving hypercube data:', error);
+  // });
+
   async function getObj() {
     const response = await fetch("object.json");
     const data = await response.json(); //object
@@ -142,30 +224,31 @@ require(["js/qlik"], function (qlik) {
   async function mainDisplay() {
     const val = await getObj(); //object ||r data
     console.log(val);
-    const ob = Object.entries(val); 
-    
+    const ob = Object.entries(val["Data"]);
+
     ob.forEach(([k, v]) => {
       console.log(k);
       console.log(v);
-      app.createGenericObject({
-        fields: {
-          qValueExpression: "="+v
-        }
-      }).then(function(reply) {
-        reply.getLayout().then(function(layout) {
-          console.log(layout);
-          var measureValue = layout.fields;
-    
-          var html="<span>"+measureValue+"</span>";
-          $("#"+k).append(html);
+      app
+        .createGenericObject({
+          fields: {
+            qValueExpression: "=" + v,
+          },
+        })
+        .then(function (reply) {
+          reply.getLayout().then(function (layout) {
+            console.log(layout);
+
+            var measureValue = layout.fields;
+
+            var html = "<span>" + measureValue + "</span>";
+            $("#" + k).append(html);
+          });
         });
-      });
     });
   }
   mainDisplay();
-  
-  
-  
+
   $(document).ready(function () {
     //Main-content Switch
     function removeActiveMain() {
@@ -197,4 +280,3 @@ require(["js/qlik"], function (qlik) {
     });
   });
 });
-
