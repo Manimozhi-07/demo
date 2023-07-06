@@ -15,20 +15,30 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
     <link
       href="https://fonts.googleapis.com/css?family=Poppins"
       rel="stylesheet"
     />
+    <!--Chart JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-doughnutlabel/1.0.2/chartjs-plugin-doughnutlabel.js"></script>
+
     <!-- RequireJS -->
     <script src="../../resources/assets/external/requirejs/require.js"></script>
-    <script src="/resources/assets/external/requirejs/require-config.js"></script>
+
+    <!--jQuery-->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <!--custom css-->
     <link rel="stylesheet" href="demo-dashboard.css" />
   </head>
+
   <body>
     <div id="wrapper">
       <div id="sidebar">
@@ -63,13 +73,16 @@
             >
             <a href="#"
               ><li id="For You">
-                <i class="fa-regular fa-paper-plane"></i>&nbsp;<span>For You</span>
+                <i class="fa-regular fa-paper-plane"></i>&nbsp;<span
+                  >For You</span
+                >
               </li></a
             >
             <a href="#"
               ><li id="Invite Friends">
-                <i class="fa-solid fa-clipboard"></i>&nbsp;<span>Invite Friends</span>
-
+                <i class="fa-solid fa-clipboard"></i>&nbsp;<span
+                  >Invite Friends</span
+                >
               </li></a
             >
             <a href="#"
@@ -114,67 +127,50 @@
               <div id="kpis">
                 <div class="kpi">
                   <div class="kpihead">
-                    <div class="kpiicon" style="background-color: orange">
-                      <i class="fa-brands fa-bitcoin"></i>
-                    </div>
-                    <span>Bitcoin</span>
+                    <div id="Men's Clothes"></div>
                   </div>
+
                   <div class="kpibody">
                     <div class="obj" id="kpi1">
-                   <div class="maindata" id="maindata1"></div>
-                   <div class="subdata" id="subdata1"></div>
-
+                      <div class="maindata" id="maindata-Men's Clothes"></div>
+                      <div class="subdata" id="subdata-Men's Clothes"></div>
                     </div>
-                    <div class="stock positive">
-                      <span>+1.29%</span>
-                    </div>
+                    <div class="stock" id="indicator-Men's Clothes"></div>
                   </div>
                 </div>
                 <div class="kpi">
                   <div class="kpihead">
-                    <div
-                      class="kpiicon"
-                      style="background-color: rgb(49, 49, 255)"
-                    >
-                      <i class="fa-brands fa-ethereum"></i>
-                    </div>
-                    <span>Ethereum</span>
+                  
+                    <div id="Women's Clothes"></div>
                   </div>
 
                   <div class="kpibody">
                     <div class="obj" id="kpi2">
-                      <div class="maindata"id="maindata2"></div>
-                      <div class="subdata" id="subdata2"></div>
+                      <div class="maindata" id="maindata-Women's Clothes"></div>
+                      <div class="subdata" id="subdata-Women's Clothes"></div>
                     </div>
-                    <div class="stock negative">
-                      <span>-0.34%</span>
-                    </div>
+                    <div class="stock" id="indicator-Women's Clothes"></div>
                   </div>
                 </div>
                 <div class="kpi">
                   <div class="kpihead">
-                    <div class="kpiicon" style="background-color: red">
-                      <i class="fa-brands fa-strava"></i>
-                    </div>
-                    <span>Avalanche</span>
+              
+                    <div id="Baby Clothes"></div>
                   </div>
                   <div class="kpibody">
-                    <div class="obj" id="kpi3">  
-                      <div class="maindata"id="maindata3"></div>
-                    <div class="subdata" id="subdata3"></div></div>
-                    <div class="stock negative">
-                      <span>-0.23%</span>
+                    <div class="obj" id="kpi3">
+                      <div class="maindata" id="maindata-Baby Clothes"></div>
+                      <div class="subdata" id="subdata-Baby Clothes"></div>
                     </div>
+                    <div class="stock" id="indicator-Baby Clothes"></div>
                   </div>
                 </div>
               </div>
               <div id="chart">
-                <div id="left">
+                <div  class="chartdiv" id="left">
                   <div class="card-header">
-                    <span>Balance</span>
-                    <span style="color: var(--green)"
-                      ><i class="fa-solid fa-arrow-up">&nbsp;</i>3.12%</span
-                    >
+                    <span>Sales</span>
+                    <div id="indicator"></div>
                   </div>
                   <div id="kpi4"></div>
                   <div class="foot">
@@ -196,60 +192,19 @@
                   </div>
                 </div>
 
-                <div id="middle">
+                <div class="chartdiv" id="middle">
                   <div class="t">
                     <span>Wallet</span>
                   </div>
-                  <div id="pie"></div>
-                </div>
-                <div id="right">
-                  <div class="t" style="text-align: center">
-                    <span> 4 Currencies</span>
+                  <div id="pieChart">
+                    <canvas id="pie"></canvas>
                   </div>
-                  <table id="currency">
-                    <!-- <div class="curr-row">
-                      <div class="curr-col1">
-                        <i
-                          class="fa-brands fa-bitcoin"
-                          style="background-color: orange"
-                        ></i>
-                        <span>Bitcoin</span>
-                      </div>
-                      <div class="curr-col2">
-                        <span style="color: var(--green)"
-                          ><i class="fa-solid fa-arrow-up">&nbsp;</i>3.12%</span
-                        >
-                      </div>
-                    </div>
-                    <div class="curr-row">
-                      <div class="curr-col1">
-                        <i
-                          class="fa-brands fa-ethereum"
-                          style="background-color: rgb(49, 49, 255)"
-                        ></i>
-                        <span>Ethereum</span>
-                      </div>
-                      <div class="curr-col2">
-                        <span style="color: var(--green)"
-                          ><i class="fa-solid fa-arrow-up">&nbsp;</i>2.12%</span
-                        >
-                      </div>
-                    </div>
-                    <div class="curr-row">
-                      <div class="curr-col1">
-                        <i
-                          class="fa-solid fa-t"
-                          style="background-color: violet"
-                        ></i>
-                        <span>USDT</span>
-                      </div>
-                      <div class="curr-col2">
-                        <span style="color: var(--green)"
-                          ><i class="fa-solid fa-arrow-up">&nbsp;</i>1.32%</span
-                        >
-                      </div>
-                    </div> -->
-                  </table>
+                </div>
+                <div class="chartdiv" id="right">
+                  <div class="t" style="text-align: center">
+                    <span> 3 Products</span>
+                  </div>
+                  <table id="currency"></table>
                 </div>
               </div>
             </div>
@@ -274,7 +229,10 @@
                   <option value="Dec">Dec</option>
                 </select>
               </div>
-              <div id="ob"></div>
+
+              <div id="ob">
+                <!-- <canvas id="newLineChart"></canvas> -->
+              </div>
             </div>
           </div>
           <div class="r rowh55">
@@ -287,15 +245,8 @@
             </div>
             <div class="tab-content activetab-content" id="summary">
               <div class="tabledatacont">
-                <!-- <div class="tabledata" id="tabledata0"></div>
-                <div class="tabledata" id="tabledata1"></div>
-                <div class="tabledata" id="tabledata2"></div>
-                <div class="tabledata" id="tabledata3"></div> -->
-                <canvas class="tabledata" id="tabledata0"></canvas>
-                <canvas class="tabledata" id="tabledata1"></canvas>
-                <canvas class="tabledata" id="tabledata2"></canvas>
-                <canvas class="tabledata" id="tabledata3"></canvas>
-               
+            
+                <table id="tbl"></table>
               </div>
               <div id="buttonsdiv">
                 <div class="buttonbox">
@@ -314,113 +265,8 @@
                   <button class="button sellbtn">Sell</button>
                   <button class="button activebtn">Buy</button>
                 </div>
-
               </div>
-              <!--<div class="b">
-                 <div class="bcw15">
-                  <i
-                    class="fa-brands fa-bitcoin brand"
-                    style="background-color: orange" 
-                  ></i
-                  >&nbsp;
-                  <span>Bitcoin</span>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Price</div>
-                  <div class="val">1.64375</div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Change</div>
-                  <div class="val green">
-                    +2.10% &nbsp;<i class="fa-solid fa-arrow-trend-up"></i>
-                  </div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">24 hr change</div>
-                  <div class="val green">-10.98%</div>
-                </div>
-                <div class="bcw25" id="lc1"></div>
-                <div class="bcw15 buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-              </div>
-              <div class="b">
-                <div class="bcw15">
-                  <i
-                    class="fa-brands fa-ethereum brand"
-                    style="background-color: rgb(49, 49, 255)"
-                  ></i
-                  >&nbsp; <span>Ethereum</span>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Price</div>
-                  <div class="val">1.64375432656</div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Change</div>
-                  <div class="val red">-2.22% &nbsp;<i class="fa-solid fa-arrow-trend-down"></i></div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">24 hr change</div>
-                  <div class="val red">-10.78%</div>
-                </div>
-                <div class="bcw25" id="lc2"></div>
-                <div class="bcw15 buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-              </div>
-              <div class="b">
-                <div class="bcw15">
-                  <i class="fa-solid fa-t brand" style="background-color: violet"></i
-                  >&nbsp; <span>USDT</span>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Price</div>
-                  <div class="val">$8.5435</div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Change</div>
-                  <div class="val green">+1.36% &nbsp;<i class="fa-solid fa-arrow-trend-up"></i></div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">24 hr change</div>
-                  <div class="val green">+20.67</div>
-                </div>
-                <div class="bcw25" id="lc3"></div>
-                <div class="bcw15 buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-              </div>
-              <div class="b">
-                <div class="bcw15">
-                  <i
-                    class="fa-brands fa-strava brand"
-                    style="background-color: red"
-                  ></i
-                  >&nbsp;<span>Avalanche</span>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Price</div>
-                  <div class="val">$76.74</div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">Change</div>
-                  <div class="val green">+0.36% &nbsp;<i class="fa-solid fa-arrow-trend-up"></i></div>
-                </div>
-                <div class="bcw15">
-                  <div class="title">24 hr change</div>
-                  <div class="val green">+3.78</div>
-                </div>
-                <div class="bcw25" id="lc4"></div>
-                <div class="bcw15 buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-              </div> -->
-              <!-- <table id="customTable"></table> -->
+              
             </div>
             <div class="tab-content" id="table"></div>
             <div class="tab-content" id="chartobj"></div>
@@ -435,7 +281,7 @@
         <div class="main"><span>Settings</span></div>
       </div>
     </div>
+
     <script src="demo-dashboard.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   </body>
 </html>

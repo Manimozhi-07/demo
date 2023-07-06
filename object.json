@@ -1,11 +1,6 @@
 {
   "Data":{
-    "maindata1": "Avg(Sales)",
-    "subdata1": "Sum(Quantity)",
-    "maindata2": "Avg(Sales)",
-    "subdata2": "Count(Product)",
-    "maindata3": "Avg(UnitPrice)",
-    "subdata3": "Max(UnitPrice)",
+    "indicator":"Min(UnitPrice)",
     "kpi4": "Avg(Sales)",
     "kpi5": "Max(Sales)",
     "kpi6": "Min(Sales)"

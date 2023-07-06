@@ -18,6 +18,8 @@
 }
 body {
   background-color: var(--grey);
+  width: 100%;
+  height: 100%;
 }
 #wrapper {
   display: flex;
@@ -27,13 +29,15 @@ body {
 #sidebar {
   padding: 20px;
   width: 13%;
-  height: 100vh;
+  position: fixed;
+  height: 100%;
   background-color: var(--white);
 }
 #brand {
   padding: 5px;
   font-size: 20px;
   font-weight: bolder;
+  margin-bottom: 20px;
 }
 #brand i {
   color: var(--primary);
@@ -68,6 +72,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  position: relative;
+  left: 13%;
 }
 #navbar {
   width: 100%;
@@ -139,6 +145,7 @@ body {
 }
 .r {
   width: 100%;
+
   border-radius: 10px;
 }
 .rowh45 {
@@ -147,9 +154,6 @@ body {
   gap: 15px;
 }
 .rowh55 {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   height: 55%;
   background-color: var(--white);
 }
@@ -158,13 +162,14 @@ body {
   border-radius: 10px;
 }
 .colw70 {
-  width: 70%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 .colw30 {
-  width: 30%;
+  width: 35%;
+ 
   background-color: var(--white);
 }
 #kpis {
@@ -174,11 +179,13 @@ body {
   display: flex;
   gap: 15px;
 }
+
 .kpi {
-  width: 33%;
+  /* width: 33%; */
   height: 100%;
   background-color: var(--white);
   border-radius: 10px;
+  flex: 1;
 }
 .kpihead {
   padding: 10px;
@@ -186,22 +193,11 @@ body {
   gap: 10px;
   align-items: center;
   height: 40%;
-}
-.kpiicon {
-  width: 30px;
-  height: 30px;
-
-  border-radius: 50%;
-  text-align: center;
-  padding: 5px;
-  font-size: 14px;
-  color: var(--white);
-}
-
-.kpihead span {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
+  color: black;
 }
+
 .kpibody {
   display: flex;
   justify-content: space-between;
@@ -212,7 +208,7 @@ body {
   gap: 10px;
 }
 .obj {
-  width: 70%;
+  width: 65%;
   height: 100%;
   font-weight: bold;
   display: flex;
@@ -229,7 +225,7 @@ body {
   color: var(--font-color);
 }
 .stock {
-  width: 30%;
+  width: 35%;
   padding: 5px;
   border-radius: 20px;
   text-align: center;
@@ -250,8 +246,10 @@ body {
   border-radius: 10px;
   display: flex;
 }
+.chartdiv {
+  flex: 1;
+}
 #left {
-  width: 33.3%;
   height: 100%;
   border-right: 2px solid var(--grey);
 
@@ -271,11 +269,12 @@ body {
   gap: 20px;
   font-size: 12px;
   color: black;
+  padding:10px;
 }
 .footdata {
-  width: 50%;
+  flex:1;
   height: 100%;
-  padding: 5px;
+  
 }
 #income {
   border-right: 1px solid var(--search);
@@ -297,21 +296,32 @@ body {
   justify-content: start !important;
 }
 #middle {
-  width: 33.3%;
   height: 100%;
   padding: 10px;
 }
-#pie {
+/* #middle canvas {
+  width: 100% !important;
+  height: 100% !important;
+} */
+/* #right canvas {
+  width: 100% !important;
+  height: 100% !important;
+} */
+#pieChart {
   width: 100%;
-  height: 95%;
+
   padding: 10px;
 }
+#pie {
+  width: 90% !important;
+  height: 90% !important;
+}
 #right {
-  width: 33.3%;
   height: 100%;
   padding: 10px;
 }
 .card-header {
+  padding-bottom: 10px;
   font-size: 14px;
   font-weight: bold;
   display: flex;
@@ -324,7 +334,7 @@ body {
 #currency {
   width: 100%;
   height: 90%;
-  font-size: 10px;
+  font-size: 12px;
   padding: 10px;
   font-weight: bold;
   color: black;
@@ -369,6 +379,7 @@ body {
 
 .tabledatacont {
   width: 85%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -389,11 +400,12 @@ body {
 }
 #ob {
   width: 100%;
-  height: 85%;
+  height: 80%;
   padding: 10px;
 }
 #tabs {
   display: flex;
+  padding: 10%;
   gap: 20px;
   font-size: 14px;
   padding: 10px;
@@ -448,9 +460,7 @@ td {
   align-items: center;
   justify-content: center;
 }
-.bcw15 {
-  width: 15%;
-}
+
 .title {
   color: black;
   font-size: 12px;
@@ -470,19 +480,53 @@ td {
 .red {
   color: red;
 }
-.bcw25 {
-  width: 25%;
-  height: 100%;
-}
-.buttonbox ,.tabledata{
-  display: flex;
 
+.buttonbox {
+  display: flex;
   align-items: center;
   gap: 15px;
   background-color: var(--search);
   height: 20%;
-  border-radius: 10px;
+  /* border-radius:10px; */
   justify-content: center;
+}
+#tbl {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  height: 100%;
+}
+#tbl tr {
+  height: 20%;
+  /* border-radius: 10px; */
+  background-color: var(--search);
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+#tbl tr :first-child {
+  width: 25%;
+}
+#tbl canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+#tbl tr td {
+  width: 20%;
+  height: 100%;
+
+  font-size: 12px;
+  color: black;
+  font-weight: bold;
+}
+
+#tbl tr td span {
+  color: var(--font-color);
+  font-size: 13px;
+  font-weight: lighter;
 }
 .buttonbox .button {
   padding: 2px 10px;
@@ -498,12 +542,26 @@ td {
   background-color: var(--white);
   color: var(--primary);
 }
+.loader {
+  border: 20px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 50px;
+  height: 50px;
+  
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 @media screen and (min-width: 1200px) and (max-width: 1550px) {
   #sidebar {
     width: 16%;
   }
   #content {
     width: 84%;
+    left: 16%;
   }
 }
 
@@ -527,18 +585,17 @@ td {
   }
   #content {
     width: 93%;
+    left: 7%;
   }
 }
 @media screen and (min-width: 991px) and (max-width: 1110px) {
-  #wrapper {
-    display: block;
-  }
   #brand {
     text-align: center;
   }
   #sidebar {
     width: 100%;
     height: 100%;
+    position: static;
   }
   #list {
     text-align: center;
@@ -551,5 +608,6 @@ td {
 
   #content {
     width: 100%;
+    left: 0%;
   }
 }

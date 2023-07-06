@@ -26,55 +26,88 @@ require.config({
 
 require(["js/qlik"], function (qlik) {
   var app = qlik.openApp("a92e83cb-98b5-4c02-9dad-753067b309bd", config);
-  var app1 = qlik.openApp("509332f9-1461-4a37-8b3f-84eab2666ec4", config);
-  var tableapp = qlik.openApp("36d5ea82-cd8a-429f-9bd2-0fba39580bb9", config);
-  var app2 = qlik.openApp("745e4bbe-8613-4999-b89f-8da89ed7985b", config);
-  // app1.getObject("ob", "fxyuxvp");
-  app1.getObject("pie", "cXahBQ");
-  app1.getObject("lc1", "JRVHPjJ");
-  app1.getObject("lc2", "nrEGj");
-  app1.getObject("lc3", "JRVHPjJ");
-  app1.getObject("lc4", "JRVHPjJ");
+  
+  app.getObject("ob", "VPZjNP");
   app.getObject("table", "pvJDPB");
   app.getObject("chartobj", "tTZQUX");
 
-  app.visualization
-    .create(
-      "linechart",
-      ["Product Category", "OrderDate.autoCalendar.Month", "=Avg([Sales])"],
-      {
-        lineType: "area",
-        nullMode: "connect",
-        dataPoint: {
-          show: true,
-          showLabels: true,
-        },
-      }
-    )
-    .then(function (visual) {
-      console.log(visual);
-      visual.show("ob");
-    });
+  $(document).ready(function () {
+    //Data
+    async function getObj() {
+      const response = await fetch("object.json");
+      const data = await response.json(); //object
+      return data; // async function always returns promise
+    }
 
-  var tableProperties = {
-    qInfo: {
-      qType: "table",
-    },
-    qHyperCubeDef: {
+    async function mainDisplay() {
+      const val = await getObj(); //object ||r data
+      console.log(val);
+      const ob = Object.entries(val["Data"]);
+
+      ob.forEach(([k, v]) => {
+        console.log(k);
+        console.log(v);
+        app
+          .createGenericObject({
+            fields: {
+              qValueExpression: "=" + v,
+            },
+          })
+          .then(function (reply) {
+            reply.getLayout().then(function (layout) {
+              console.log(layout);
+              
+              var measureValue = layout.fields;
+              console.log(k, measureValue);
+              if (k === "indicator") {
+                console.log(measureValue);
+                if (measureValue > 5) {
+                  var html =
+                    "<span><i class='fa-solid fa-arrow-up'></i>&nbsp;" +
+                    measureValue +
+                    "</span>";
+                  $("#" + k).append(html);
+                  $("#" + k).addClass("green");
+                } else {
+                  var html =
+                    "<span><i class='fa-solid fa-arrow-down'></i>&nbsp;" +
+                    measureValue +
+                    "</span>";
+                  $("#" + k).append(html);
+                  $("#" + k).addClass("red");
+                }
+              } else {
+                var html = "<span>" + measureValue + "</span>";
+                $("#" + k).append(html);
+              }
+            });
+          });
+      });
+    }
+    mainDisplay();
+
+    var tableProp = {
       qDimensions: [
         {
           qDef: {
-            qFieldDefs: ["Currency"],
+            qFieldDefs: ["Product Category"],
+          },
+        },
+      ],
+      qMeasures: [
+        {
+          qDef: {
+            qDef: "Sum(UnitPrice)",
           },
         },
         {
           qDef: {
-            qFieldDefs: ["Currency Code"],
+            qDef: "Count(Product)",
           },
         },
         {
           qDef: {
-            qFieldDefs: ["24 hr change"],
+            qDef: "Min(UnitPrice)",
           },
         },
       ],
@@ -82,174 +115,217 @@ require(["js/qlik"], function (qlik) {
       qInitialDataFetch: [
         {
           qTop: 0,
-          qHeight: 4, // Number of rows to retrieve
+          qHeight: 20, // Number of rows to retrieve
           qLeft: 0,
-          qWidth: 3, // Number of columns to retrieve
+          qWidth: 20, // Number of columns to retrieve
         },
       ],
-    },
-  };
-  tableapp.createGenericObject(tableProperties, function (reply) {
-    var tableData = reply.qHyperCube.qDataPages[0].qMatrix;
-    console.log(tableData);
-    $.each(reply.qHyperCube.qDataPages[0].qMatrix, function (k, val) {
-      if (k < 3) {
-        var html =
-          "<tr><td>" +
-          val[0].qText +
-          "<br>" +
-          val[1].qText +
-          "</td>" +
-          "<td style='color:" +
-          (val[2].qNum > 0 ? "green" : "red") +
-          "'>" +
-          val[2].qText +
-          "</td></tr>";
+    };
 
-        $("#currency").append(html);
+    //KPIs
+    app.createCube(tableProp, function (r) {
+      var tdata = r.qHyperCube.qDataPages[0].qMatrix;
+      console.log(tdata);
+      function retriveData(title, main, sub, indi) {
+        console.log(title);
+        document.getElementById(title).innerText = title;
+        document.getElementById("maindata-" + title).innerText = main;
+        document.getElementById("subdata-" + title).innerText = sub;
+
+        if (indi > 5) {
+          console.log(indi);
+          document.getElementById("indicator-" + title).innerHTML =
+            "<i class='fa-solid fa-arrow-up'></i>&nbsp;" + indi;
+          document
+            .getElementById("indicator-" + title)
+            .classList.add("positive");
+        } else {
+          console.log(indi);
+          document.getElementById("indicator-" + title).innerHTML =
+            "<i class='fa-solid fa-arrow-down'></i>&nbsp;" + indi;
+          document
+            .getElementById("indicator-" + title)
+            .classList.add("negative");
+        }
       }
-    });
-  });
 
-  app.getObjectProperties("pvJDPB").then(function (model) {
-    model
-      .getHyperCubeData("/qHyperCubeDef", [
-        { qTop: 0, qLeft: 0, qWidth: 12, qHeight: 100 },
-      ])
-      .then((d) => {
-        console.log(d[0].qMatrix); //8
-        $.each(d[0].qMatrix, function (k, value) {
-          if (k < 4) {
-            console.log(value[3].qMiniChart.qMatrix); //12
-            var xValue ;
-            value[3].qMiniChart.qMatrix.map(function (val) {
-               xValue = val[0].qText;
-              var yValue = val[1].qNum;
-              console.log(xValue);
-              console.log(xValue, yValue);
-            });
-            
-
-            // Extract X and Y values from data points
-            // const xValues = dataPoints.map(function (point) {
-            //   console.log(point.x);
-            //   return point.x;
-            // });
-
-            // const yValues = dataPoints.map(function (point) {
-            //   return point.y;
-            // });
-            // $.each(xValues,function(xValue){
-            //   xAxis.push(xValue);
-            // });
-            // Create the mini chart using Qlik Sense visualization API
-            // const chartOptions = {
-            //   title: "Mini Chart",
-            //   type: "linechart", // Adjust the chart type as needed
-            //   dimensions: {
-            //     min: 2,
-            //     max: 2,
-            //   },
-            //   measures: {
-            //     min: 2,
-            //     max: 2,
-            //   },
-            //   data: {
-            //     targets: [0],
-            //     rows: [
-            //       xValues.map(function (xValue) {
-            //         console.log(xValue);
-            //         xAxis.append(xValue);
-            //         return {
-            //           qText: xValue,
-            //         };
-            //       }),
-            //       yValues.map(function (yValue) {
-            //         console.log(yValue);
-            //         return {
-            //           qNum: yValue,
-            //         };
-            //       }),
-            //     ],
-            //   },
-            // };
-
-            // const xAxis = [];
-            // console.log(xAxis);
-            // const yAxis = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
-
-            // new Chart("tabledata" + k, {
-            //   type: "line",
-            //   data: {
-            //     labels: xAxis,
-            //     datasets: [
-            //       {
-            //         fill: false,
-            //         lineTension: 0,
-            //         backgroundColor: "rgba(0,0,255,1.0)",
-            //         borderColor: "rgba(0,0,255,0.1)",
-            //         data: yAxis,
-            //       },
-            //     ],
-            //   },
-            // });
-            // console.log(
-            //   value[0].qText,
-            //   value[1].qNum,
-            //   value[6].qNum,
-            //   value[7].qNum
-            // );
-            // const dataval = "<tr><td>" + value[0].qText + "</td>" + "<td>";
-          }
-          
-        });
-      
+      $.each(tdata, function (k, v) {
+        if (v[0].qText === "Men's Clothes") {
+          retriveData(v[0].qText, v[1].qText, v[2].qText, v[3].qText);
+        } else if (v[0].qText === "Women's Clothes") {
+          retriveData(v[0].qText, v[1].qText, v[2].qText, v[3].qText);
+        } else if (v[0].qText === "Baby Clothes") {
+          retriveData(v[0].qText, v[1].qText, v[2].qText, v[3].qText);
+        }
       });
-  });
+    });
 
-  // Get the table data
-  // hypercubeObject.getHyp('/qHyperCubeDef', [{ qTop: 0, qLeft: 0, qWidth: 10, qHeight: 100 }]).then(data => {
-  // console.log(data);
-  //   // const tbldata = data.qDataPages[0].qMatrix;
-  //   // console.log(tbldata);
-  // }).catch(error => {
-  //   console.error('Error retrieving hypercube data:', error);
-  // });
+    //3 Products
+    app.createCube(tableProp, function (reply) {
+      const d = reply.qHyperCube.qDataPages[0].qMatrix;
+      var xArr = [];
+      var yArr = [];
+      $("#currency").empty();
+      $.each(d, function (k, v) {
+        var xVal;
+        var yVal;
+        if (k < 3) {
+          xVal = v[0].qText;
+          yVal = v[3].qText;
+          xArr.push(xVal);
+          yArr.push(yVal);
 
-  async function getObj() {
-    const response = await fetch("object.json");
-    const data = await response.json(); //object
-    return data; // async function always returns promise
-  }
-  async function mainDisplay() {
-    const val = await getObj(); //object ||r data
-    console.log(val);
-    const ob = Object.entries(val["Data"]);
+          const display =
+            "<tr><td>" +
+            v[0].qText +
+            "</td><td style='color:" +
+            (v[3].qText > 5 ? "green" : "red") +
+            "'>" +
+            (v[3].qText > 5
+              ? '<i class="fa-solid fa-arrow-up" style="color:green;text-align:center"></i>&nbsp;'
+              : '<i class="fa-solid fa-arrow-down" style="color:red;text-align:center"></i>&nbsp;') +
+            v[3].qText +
+            "</td></tr>";
+          $("#currency").append(display);
+        }
+      });
+      console.log(xArr, yArr);
+      new Chart($("#pie"), {
+        type: "doughnut",
+        data: {
+          labels: xArr,
 
-    ob.forEach(([k, v]) => {
-      console.log(k);
-      console.log(v);
-      app
-        .createGenericObject({
-          fields: {
-            qValueExpression: "=" + v,
+          datasets: [
+            {
+              data: yArr,
+              backgroundColor: ["#f49b41", "#6182fb", "#7545fa"],
+            },
+          ],
+        },
+        options: {
+          legend: {
+            display: false,
           },
-        })
-        .then(function (reply) {
-          reply.getLayout().then(function (layout) {
-            console.log(layout);
+          cutoutPercentage: 70,
+          elements: {
+            arc: {
+              borderWidth: 3,
+            },
+          },
+        },
+      });
+    });
 
-            var measureValue = layout.fields;
+    //Summary Table
+    app.getObjectProperties("pvJDPB").then(function (model) {
+      model
+        .getHyperCubeData("/qHyperCubeDef", [
+          { qTop: 0, qLeft: 0, qWidth: 12, qHeight: 100 },
+        ])
+        .then((d) => {
+          console.log(d[0].qMatrix); //8
+          $.each(d[0].qMatrix, function (k, value) {
+            var xAxis = [];
+            var yAxis = [];
+            if (k < 4) {
+              console.log(value[3].qMiniChart.qMatrix); //12
 
-            var html = "<span>" + measureValue + "</span>";
-            $("#" + k).append(html);
+              var xValue;
+              var yValue;
+
+              value[3].qMiniChart.qMatrix.map(function (val) {
+                console.log(val);
+                xValue = val[0].qText;
+                yValue = val[1].qNum;
+                xAxis.push(xValue);
+                yAxis.push(yValue);
+                console.log(xValue, yValue);
+              });
+
+              console.log(xAxis); //xAxis Array
+              console.log(yAxis); //yAxis Array
+
+              //Appending table data
+              const htmlcont =
+                "<tr><td>" +
+                "<span >Product</span><br>" +
+                value[0].qText +
+                "</td>" +
+                "<td>" +
+                "<span >Count</span><br>" +
+                value[1].qText +
+                "</td>" +
+                "<td style='color:" +
+                (value[6].qText > 5 ? "green" : "red") +
+                "'>" +
+                "<span >Min(Unit Price)</span><br>" +
+                (value[6].qText > 5
+                  ? '<i class="fa-solid fa-arrow-up" style="color:green;text-align:center"></i>'
+                  : '<i class="fa-solid fa-arrow-down" style="color:red;text-align:center"></i>') +
+                value[6].qText +
+                "</td>" +
+                "<td style=color:" +
+                (value[7].qText > 50 ? "green" : "red") +
+                ">" +
+                "<span>Max(Unit Price)</span><br>" +
+                (value[7].qText > 50
+                  ? '<i class="fa-solid fa-arrow-up" style="color:green;text-align:center"></i>'
+                  : '<i class="fa-solid fa-arrow-down" style="color:red;text-align:center"></i>') +
+                value[7].qText +
+                "</td>" +
+                "<td><canvas id='linecrt" +
+                k +
+                "'></canvas></td></tr>";
+
+              $("#tbl").append(htmlcont);
+              const backgroundcolor = [];
+              const bordercolor = [];
+              if (value[7].qText > 50) {
+                bordercolor.push("green");
+                backgroundcolor.push("#bfebbf");
+              } else {
+                bordercolor.push("red");
+                backgroundcolor.push("#f1caca");
+              }
+              new Chart($("#linecrt" + k), {
+                type: "line",
+                data: {
+                  labels: xAxis,
+                  datasets: [
+                    {
+                      fill: true,
+                      lineTension: 0,
+                      backgroundColor: backgroundcolor,
+                      borderColor: bordercolor,
+                      borderWidth: 2,
+                      data: yAxis,
+                      pointRadius: 0,
+                    },
+                  ],
+                },
+                options: {
+                  legend: { display: false },
+                  scales: {
+                    yAxes: [{ ticks: { min: 100, max: 3000 } }],
+                  },
+                  scales: {
+                    xAxes: [
+                      {
+                        display: false,
+                      },
+                    ],
+                    yAxes: [
+                      {
+                        display: false,
+                      },
+                    ],
+                  },
+                },
+              });
+            }
           });
         });
     });
-  }
-  mainDisplay();
-
-  $(document).ready(function () {
     //Main-content Switch
     function removeActiveMain() {
       $("#list li").removeClass("activelist");
@@ -265,6 +341,7 @@ require(["js/qlik"], function (qlik) {
         qlik.resize();
       });
     });
+
     //Tab Switch
     function removeActive() {
       $("#tabs span").removeClass("activetab");
@@ -277,6 +354,30 @@ require(["js/qlik"], function (qlik) {
         $(".tab-content").eq(i).addClass("activetab-content");
         qlik.resize();
       });
-    });
+    }); //Tab Switch
+    // const xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+    // const yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+    // new Chart("pie", {
+    //   type: "line",
+    //   data: {
+    //     labels: xValues,
+    //     datasets: [
+    //       {
+    //         fill: false,
+    //         lineTension: 0,
+    //         backgroundColor: "rgba(0,0,255,1.0)",
+    //         borderColor: "rgba(0,0,255,0.1)",
+    //         data: yValues,
+    //       },
+    //     ],
+    //   },
+    //   options: {
+    //     legend: { display: false },
+    //     scales: {
+    //       yAxes: [{ ticks: { min: 6, max: 16 } }],
+    //     },
+    //   },
+    // });
   });
 });
