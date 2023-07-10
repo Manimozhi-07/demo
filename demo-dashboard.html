@@ -22,8 +22,7 @@
     />
     <!--Chart JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-doughnutlabel/1.0.2/chartjs-plugin-doughnutlabel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-doughnutlabel/1.0.2/chartjs-plugin-doughnutlabel.js"></script>
 
     <!-- RequireJS -->
     <script src="../../resources/assets/external/requirejs/require.js"></script>
@@ -37,13 +36,14 @@
     ></script>
     <!--custom css-->
     <link rel="stylesheet" href="demo-dashboard.css" />
+    <script src="demo-dashboard.js"></script>
   </head>
 
   <body>
     <div id="wrapper">
       <div id="sidebar">
         <div id="brand">
-          <i class="fa-brands fa-algolia"></i>&ensp;
+          <i class="fa-brands fa-algolia"></i> 
           <span>Hylesoin</span>
         </div>
         <div id="list">
@@ -121,58 +121,69 @@
         <div class="main">
           <span>Assets</span>
         </div>
-        <div class="main activemain">
+        <div id="trade" class="main activemain">
           <div class="r rowh45">
             <div class="c colw70">
               <div id="kpis">
-                <div class="kpi">
-                  <div class="kpihead">
-                    <div id="Men's Clothes"></div>
-                  </div>
-
-                  <div class="kpibody">
-                    <div class="obj" id="kpi1">
-                      <div class="maindata" id="maindata-Men's Clothes"></div>
-                      <div class="subdata" id="subdata-Men's Clothes"></div>
+                <div id="kpi-Men's Clothes" class="kpi">
+                  <div class="wrap">
+                    <div class="kpihead">
+                      <div id="Men's Clothes"></div>
                     </div>
-                    <div class="stock" id="indicator-Men's Clothes"></div>
+
+                    <div class="kpibody">
+                      <div class="obj" id="kpi1">
+                        <div class="maindata" id="maindata-Men's Clothes"></div>
+                        <div class="subdata" id="subdata-Men's Clothes"></div>
+                      </div>
+                      <div class="stock" id="indicator-Men's Clothes"></div>
+                    </div>
                   </div>
                 </div>
-                <div class="kpi">
-                  <div class="kpihead">
-                  
-                    <div id="Women's Clothes"></div>
-                  </div>
-
-                  <div class="kpibody">
-                    <div class="obj" id="kpi2">
-                      <div class="maindata" id="maindata-Women's Clothes"></div>
-                      <div class="subdata" id="subdata-Women's Clothes"></div>
+                <div id="kpi-Women's Clothes" class="kpi">
+                  <div class="wrap">
+                    <div class="kpihead">
+                      <div id="Women's Clothes"></div>
                     </div>
-                    <div class="stock" id="indicator-Women's Clothes"></div>
+
+                    <div class="kpibody">
+                      <div class="obj" id="kpi2">
+                        <div
+                          class="maindata"
+                          id="maindata-Women's Clothes"
+                        ></div>
+                        <div class="subdata" id="subdata-Women's Clothes"></div>
+                      </div>
+                      <div class="stock" id="indicator-Women's Clothes"></div>
+                    </div>
                   </div>
                 </div>
-                <div class="kpi">
-                  <div class="kpihead">
-              
-                    <div id="Baby Clothes"></div>
-                  </div>
-                  <div class="kpibody">
-                    <div class="obj" id="kpi3">
-                      <div class="maindata" id="maindata-Baby Clothes"></div>
-                      <div class="subdata" id="subdata-Baby Clothes"></div>
+                <div id="kpi-Baby Clothes" class="kpi">
+                  <div class="wrap">
+                    <div class="kpihead">
+                      <div id="Baby Clothes"></div>
                     </div>
-                    <div class="stock" id="indicator-Baby Clothes"></div>
+                    <div class="kpibody">
+                      <div class="obj" id="kpi3">
+                        <div class="maindata" id="maindata-Baby Clothes"></div>
+                        <div class="subdata" id="subdata-Baby Clothes"></div>
+                      </div>
+                      <div class="stock" id="indicator-Baby Clothes"></div>
+                    </div>
                   </div>
                 </div>
               </div>
               <div id="chart">
-                <div  class="chartdiv" id="left">
+                <div id="left">
                   <div class="card-header">
-                    <span>Sales</span>
-                    <div id="indicator"></div>
+                    <div class="tit">
+                      <span class="tit">Sales</span>
+                    </div>
+                    <div class="tit" id="indicator"></div>
                   </div>
-                  <div id="kpi4"></div>
+                  <div class="wrap-kpi4">
+                    <div id="kpi4"></div>
+                  </div>
                   <div class="foot">
                     <div class="footdata" id="income">
                       <div class="head">
@@ -191,20 +202,25 @@
                     </div>
                   </div>
                 </div>
+                <div class="cont" id="second">
+                  <div class="chartdiv" id="middle">
+                    <div class="t">
+                      <span>Wallet</span>
+                    </div>
 
-                <div class="chartdiv" id="middle">
-                  <div class="t">
-                    <span>Wallet</span>
+                    <div class="chartcont" id="pieChart">
+                      <canvas id="pie"></canvas>
+                    </div>
                   </div>
-                  <div id="pieChart">
-                    <canvas id="pie"></canvas>
+                  <div class="chartdiv" id="right">
+                    <div class="t" style="text-align: center">
+                      <span> 3 Products</span>
+                    </div>
+
+                    <div class="chartcont">
+                      <table id="currency"></table>
+                    </div>
                   </div>
-                </div>
-                <div class="chartdiv" id="right">
-                  <div class="t" style="text-align: center">
-                    <span> 3 Products</span>
-                  </div>
-                  <table id="currency"></table>
                 </div>
               </div>
             </div>
@@ -212,7 +228,7 @@
               <div class="card-header" style="padding: 10px">
                 <span>Statistics</span>
                 <select id="monthdd">
-                  <option value="Monthly" disabled selected hidden>
+                  <option value="Monthly" disabled="" selected="" hidden="">
                     Monthly
                   </option>
                   <option value="Jan">Jan</option>
@@ -229,8 +245,8 @@
                   <option value="Dec">Dec</option>
                 </select>
               </div>
-
-              <div id="ob">
+              <div class="wrap-line">
+                <div class="cont" id="ob"></div>
                 <!-- <canvas id="newLineChart"></canvas> -->
               </div>
             </div>
@@ -245,10 +261,9 @@
             </div>
             <div class="tab-content activetab-content" id="summary">
               <div class="tabledatacont">
-            
-                <table id="tbl"></table>
+                <table class="cont" id="tbl"></table>
               </div>
-              <div id="buttonsdiv">
+              <!-- <div id="buttonsdiv">
                 <div class="buttonbox">
                   <button class="button sellbtn">Sell</button>
                   <button class="button activebtn">Buy</button>
@@ -265,8 +280,7 @@
                   <button class="button sellbtn">Sell</button>
                   <button class="button activebtn">Buy</button>
                 </div>
-              </div>
-              
+              </div> -->
             </div>
             <div class="tab-content" id="table"></div>
             <div class="tab-content" id="chartobj"></div>
@@ -281,7 +295,5 @@
         <div class="main"><span>Settings</span></div>
       </div>
     </div>
-
-    <script src="demo-dashboard.js"></script>
   </body>
 </html>

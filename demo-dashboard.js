@@ -25,14 +25,39 @@ require.config({
 });
 
 require(["js/qlik"], function (qlik) {
-  var app = qlik.openApp("a92e83cb-98b5-4c02-9dad-753067b309bd", config);
-  
-  app.getObject("ob", "VPZjNP");
-  app.getObject("table", "pvJDPB");
-  app.getObject("chartobj", "tTZQUX");
+  var app = qlik.openApp("a92e83cb-98b5-4c02-9dad-753067b309bd", config); //open app
+
+  // function appendFn(id) {
+  //   var loaderadd = document.createElement("div");
+  //   loaderadd.classList.add("load");
+  //   loaderadd.id = "loader-" + id;
+  //   document.getElementById(id).appendChild(loaderadd);
+  //   $("#"+id).addClass("load");
+  // }
+
+  // function removeFn(id) {
+  //   var loaderremove = document.getElementById("loader-" + id);
+
+  //   loaderremove.parentNode.removeChild(loaderremove);
+  // }
 
   $(document).ready(function () {
+    $("#ob").addClass("load");
+
+    app.getObject("ob", "VPZjNP").then(function () {
+      $("#ob").removeClass("load");
+    });
+    $("#table").addClass("load");
+    app.getObject("table", "pvJDPB").then(function () {
+      $("#table").removeClass("load");
+    });
+    $("#chartobj").addClass("load");
+    app.getObject("chartobj", "tTZQUX").then(function () {
+      $("#chartobj").removeClass("load");
+    });
+
     //Data
+
     async function getObj() {
       const response = await fetch("object.json");
       const data = await response.json(); //object
@@ -40,6 +65,7 @@ require(["js/qlik"], function (qlik) {
     }
 
     async function mainDisplay() {
+      $("#kpi4").addClass("load");
       const val = await getObj(); //object ||r data
       console.log(val);
       const ob = Object.entries(val["Data"]);
@@ -56,7 +82,7 @@ require(["js/qlik"], function (qlik) {
           .then(function (reply) {
             reply.getLayout().then(function (layout) {
               console.log(layout);
-              
+
               var measureValue = layout.fields;
               console.log(k, measureValue);
               if (k === "indicator") {
@@ -81,9 +107,11 @@ require(["js/qlik"], function (qlik) {
                 $("#" + k).append(html);
               }
             });
+            $("#kpi4").removeClass("load");
           });
       });
     }
+
     mainDisplay();
 
     var tableProp = {
@@ -123,10 +151,15 @@ require(["js/qlik"], function (qlik) {
     };
 
     //KPIs
+    $(".wrap").addClass("load");
     app.createCube(tableProp, function (r) {
       var tdata = r.qHyperCube.qDataPages[0].qMatrix;
       console.log(tdata);
+
       function retriveData(title, main, sub, indi) {
+        var titleId = "kpi-" + title;
+
+        console.log(titleId);
         console.log(title);
         document.getElementById(title).innerText = title;
         document.getElementById("maindata-" + title).innerText = main;
@@ -158,14 +191,19 @@ require(["js/qlik"], function (qlik) {
           retriveData(v[0].qText, v[1].qText, v[2].qText, v[3].qText);
         }
       });
+      $(".wrap").removeClass("load");
     });
 
     //3 Products
+    // appendFn("second");
+    $(".chartcont").addClass("load");
     app.createCube(tableProp, function (reply) {
       const d = reply.qHyperCube.qDataPages[0].qMatrix;
       var xArr = [];
       var yArr = [];
+
       $("#currency").empty();
+
       $.each(d, function (k, v) {
         var xVal;
         var yVal;
@@ -189,7 +227,9 @@ require(["js/qlik"], function (qlik) {
           $("#currency").append(display);
         }
       });
+
       console.log(xArr, yArr);
+
       new Chart($("#pie"), {
         type: "doughnut",
         data: {
@@ -214,19 +254,25 @@ require(["js/qlik"], function (qlik) {
           },
         },
       });
+      $(".chartcont").removeClass("load");
     });
 
     //Summary Table
+    // appendFn("tbl");
+    $("#tbl").addClass("load");
     app.getObjectProperties("pvJDPB").then(function (model) {
       model
         .getHyperCubeData("/qHyperCubeDef", [
           { qTop: 0, qLeft: 0, qWidth: 12, qHeight: 100 },
         ])
         .then((d) => {
+          $("#tbl").removeClass("load");
           console.log(d[0].qMatrix); //8
+
           $.each(d[0].qMatrix, function (k, value) {
             var xAxis = [];
             var yAxis = [];
+
             if (k < 4) {
               console.log(value[3].qMiniChart.qMatrix); //12
 
@@ -260,8 +306,8 @@ require(["js/qlik"], function (qlik) {
                 "'>" +
                 "<span >Min(Unit Price)</span><br>" +
                 (value[6].qText > 5
-                  ? '<i class="fa-solid fa-arrow-up" style="color:green;text-align:center"></i>'
-                  : '<i class="fa-solid fa-arrow-down" style="color:red;text-align:center"></i>') +
+                  ? '<i class="fa-solid fa-arrow-up" style="color:green;text-align:center"></i>&nbsp;'
+                  : '<i class="fa-solid fa-arrow-down" style="color:red;text-align:center"></i>&nbsp;') +
                 value[6].qText +
                 "</td>" +
                 "<td style=color:" +
@@ -269,13 +315,16 @@ require(["js/qlik"], function (qlik) {
                 ">" +
                 "<span>Max(Unit Price)</span><br>" +
                 (value[7].qText > 50
-                  ? '<i class="fa-solid fa-arrow-up" style="color:green;text-align:center"></i>'
-                  : '<i class="fa-solid fa-arrow-down" style="color:red;text-align:center"></i>') +
+                  ? '<i class="fa-solid fa-arrow-up" style="color:green;text-align:center"></i>&nbsp;'
+                  : '<i class="fa-solid fa-arrow-down" style="color:red;text-align:center"></i>&nbsp;') +
                 value[7].qText +
                 "</td>" +
                 "<td><canvas id='linecrt" +
                 k +
-                "'></canvas></td></tr>";
+                "'></canvas></td><td class='buttonbox'>" +
+                "<button class='button sellbtn'>Sell</button>" +
+                "<button class='button activebtn'>Buy</button>" +
+                "</td></tr>";
 
               $("#tbl").append(htmlcont);
               const backgroundcolor = [];
@@ -326,6 +375,7 @@ require(["js/qlik"], function (qlik) {
           });
         });
     });
+
     //Main-content Switch
     function removeActiveMain() {
       $("#list li").removeClass("activelist");
@@ -355,29 +405,5 @@ require(["js/qlik"], function (qlik) {
         qlik.resize();
       });
     }); //Tab Switch
-    // const xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
-    // const yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
-
-    // new Chart("pie", {
-    //   type: "line",
-    //   data: {
-    //     labels: xValues,
-    //     datasets: [
-    //       {
-    //         fill: false,
-    //         lineTension: 0,
-    //         backgroundColor: "rgba(0,0,255,1.0)",
-    //         borderColor: "rgba(0,0,255,0.1)",
-    //         data: yValues,
-    //       },
-    //     ],
-    //   },
-    //   options: {
-    //     legend: { display: false },
-    //     scales: {
-    //       yAxes: [{ ticks: { min: 6, max: 16 } }],
-    //     },
-    //   },
-    // });
   });
 });

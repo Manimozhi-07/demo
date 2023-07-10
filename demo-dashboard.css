@@ -17,20 +17,20 @@
   user-select: none;
 }
 body {
-  background-color: var(--grey);
   width: 100%;
   height: 100%;
+  background-color: var(--grey);
 }
-#wrapper {
+/* #wrapper {
   display: flex;
   width: 100%;
   height: 100%;
-}
+} */
 #sidebar {
   padding: 20px;
   width: 13%;
-  position: fixed;
   height: 100%;
+  position: fixed;
   background-color: var(--white);
 }
 #brand {
@@ -68,23 +68,22 @@ body {
 #content {
   width: 87%;
   height: 100vh;
-  padding: 15px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+
   position: relative;
   left: 13%;
 }
 #navbar {
   width: 100%;
-  height: 7%;
+  height: 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px;
+  padding-bottom: 0px;
 }
 #searchbar {
   width: 30%;
-  height: 100%;
+  /* height: 100%; */
   background-color: var(--search);
   border-radius: 30px;
   color: var(--font-color);
@@ -103,7 +102,7 @@ body {
   padding: 10px;
   outline: none;
   border: none;
-  height: 100%;
+  /* height: 100%; */
 }
 #right-icons {
   display: flex;
@@ -138,14 +137,14 @@ body {
 }
 .activemain {
   width: 100%;
-  height: 93%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 15px;
 }
 .r {
   width: 100%;
-
   border-radius: 10px;
 }
 .rowh45 {
@@ -162,30 +161,37 @@ body {
   border-radius: 10px;
 }
 .colw70 {
-  width: 65%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 .colw30 {
-  width: 35%;
- 
+  width: 30%;
   background-color: var(--white);
 }
+
 #kpis {
   width: 100%;
-
   height: 45%;
   display: flex;
   gap: 15px;
 }
-
 .kpi {
-  /* width: 33%; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 33.33%;
   height: 100%;
   background-color: var(--white);
   border-radius: 10px;
-  flex: 1;
+}
+.wrap {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
 }
 .kpihead {
   padding: 10px;
@@ -193,6 +199,7 @@ body {
   gap: 10px;
   align-items: center;
   height: 40%;
+  width: 100%;
   font-size: 16px;
   font-weight: bold;
   color: black;
@@ -205,10 +212,9 @@ body {
   height: 60%;
   width: 100%;
   padding: 10px;
-  gap: 10px;
 }
 .obj {
-  width: 65%;
+  width: 70%;
   height: 100%;
   font-weight: bold;
   display: flex;
@@ -225,19 +231,36 @@ body {
   color: var(--font-color);
 }
 .stock {
-  width: 35%;
+  width: 30%;
   padding: 5px;
   border-radius: 20px;
   text-align: center;
 }
-
-.positive {
-  color: var(--green);
-  background-color: var(--positive);
+.card-header {
+  padding-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
 }
-.negative {
-  color: var(--red);
-  background-color: var(--negative);
+#monthdd {
+  border: none;
+  outline: none;
+}
+#monthdd option:hover {
+  background-color: var(--primary);
+}
+.wrap-line {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+#ob {
+  width: 100%;
+  height: 100%;
 }
 #chart {
   width: 100%;
@@ -246,38 +269,37 @@ body {
   border-radius: 10px;
   display: flex;
 }
-.chartdiv {
-  flex: 1;
-}
 #left {
+  width: 35%;
   height: 100%;
   border-right: 2px solid var(--grey);
 
   padding: 10px;
 }
-#kpi4 {
+.wrap-kpi4 {
   width: 100%;
   height: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#kpi4 {
+  width: 100%;
+  height: 100%;
   font-weight: bold;
   color: black;
-  font-size: 20px;
+  font-size: 22px;
+  text-align: center;
 }
 .foot {
   display: flex;
+  justify-content: space-around;
   width: 100%;
   height: 40%;
-  gap: 20px;
+  /* gap: 20px; */
   font-size: 12px;
   color: black;
-  padding:10px;
-}
-.footdata {
-  flex:1;
-  height: 100%;
-  
-}
-#income {
-  border-right: 1px solid var(--search);
+  /* padding: 10px; */
 }
 .head i {
   width: 20px;
@@ -292,21 +314,34 @@ body {
   font-weight: bold;
   padding: 10px;
 }
-.sn-kpi .sn-kpi-center {
-  justify-content: start !important;
+#second {
+  width: 65%;
+  height: 100%;
+  display: flex;
 }
-#middle {
+.chartdiv {
+  width: 50%;
   height: 100%;
   padding: 10px;
 }
-/* #middle canvas {
-  width: 100% !important;
-  height: 100% !important;
-} */
-/* #right canvas {
-  width: 100% !important;
-  height: 100% !important;
-} */
+.chartcont.load {
+  position: relative;
+  top: 30%;
+  left: 30%;
+}
+.positive {
+  color: var(--green);
+  background-color: var(--positive);
+}
+.negative {
+  color: var(--red);
+  background-color: var(--negative);
+}
+
+.sn-kpi .sn-kpi-center {
+  justify-content: start !important;
+}
+
 #pieChart {
   width: 100%;
 
@@ -316,93 +351,32 @@ body {
   width: 90% !important;
   height: 90% !important;
 }
-#right {
-  height: 100%;
-  padding: 10px;
-}
-.card-header {
-  padding-bottom: 10px;
-  font-size: 14px;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-}
+
 .t {
   font-size: 14px;
   font-weight: bold;
 }
+
 #currency {
   width: 100%;
-  height: 90%;
+  height: 100%;
   font-size: 12px;
   padding: 10px;
   font-weight: bold;
   color: black;
-}
-/* .curr-row {
-  width: 100%;
-  height: 33.3%;
-  display: flex;
-  gap: 40px;
-  justify-content: space-between;
-  align-items: center;
-}
-.curr-col1 {
-  width: 70%;
-  height: 100%;
-  font-weight: bold;
-  font-size: 13px;
-  font-weight: bold;
-}
-.curr-col1 i,
-.bcw15 .brand {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  text-align: center;
-  padding: 6px;
-  color: var(--white);
-}
-.curr-col2 {
-  width: 30%;
-
-  font-size: 12px;
-} */
-.bcw15 .brand {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  text-align: center;
-  padding: 6px;
-  color: var(--white);
+  line-height: 40px;
 }
 
 .tabledatacont {
-  width: 85%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 15px;
 }
 
-#buttonsdiv {
-  width: 15%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-#monthdd {
-  border: none;
-  outline: none;
-}
-#monthdd option:hover {
-  background-color: var(--primary);
-}
-#ob {
-  width: 100%;
-  height: 80%;
-  padding: 10px;
-}
 #tabs {
   display: flex;
   padding: 10%;
@@ -428,49 +402,6 @@ body {
   display: flex;
 }
 
-/* #customTable {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  height: 100%;
-}
-tr {
-  width: 100%;
-  height: 20%;
-  background-color: var(--grey);
-  padding: 20px;
-  border-radius: 20px;
-  display: flex;
-  gap: 50px;
-}
-td {
-  width: 150px;
-} */
-.b {
-  width: 100%;
-  height: 20%;
-  border-radius: 10px;
-  background-color: var(--grey);
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  align-items: center;
-  justify-content: center;
-}
-
-.title {
-  color: black;
-  font-size: 12px;
-  font-weight: bold;
-}
-.val {
-  color: var(--font-color);
-  font-size: 12px;
-  font-weight: bold;
-}
 .white {
   color: white;
 }
@@ -481,15 +412,6 @@ td {
   color: red;
 }
 
-.buttonbox {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background-color: var(--search);
-  height: 20%;
-  /* border-radius:10px; */
-  justify-content: center;
-}
 #tbl {
   display: flex;
   flex-direction: column;
@@ -499,7 +421,7 @@ td {
 }
 #tbl tr {
   height: 20%;
-  /* border-radius: 10px; */
+  border-radius: 10px;
   background-color: var(--search);
   width: 100%;
   display: flex;
@@ -528,6 +450,15 @@ td {
   font-size: 13px;
   font-weight: lighter;
 }
+.buttonbox {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--search);
+  height: 20%;
+  /* border-radius:10px; */
+  justify-content: center;
+}
 .buttonbox .button {
   padding: 2px 10px;
   border: none;
@@ -542,18 +473,24 @@ td {
   background-color: var(--white);
   color: var(--primary);
 }
-.loader {
-  border: 20px solid #f3f3f3;
+
+.load {
+  border: 5px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 50px;
-  height: 50px;
-  
+  border-top: 5px solid var(--primary);
+  width: 40px !important;
+  height: 40px !important;
+
   animation: spin 2s linear infinite;
 }
+
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 @media screen and (min-width: 1200px) and (max-width: 1550px) {
   #sidebar {
@@ -589,6 +526,9 @@ td {
   }
 }
 @media screen and (min-width: 991px) and (max-width: 1110px) {
+  #wrapper {
+    display: block;
+  }
   #brand {
     text-align: center;
   }
