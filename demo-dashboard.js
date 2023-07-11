@@ -27,20 +27,6 @@ require.config({
 require(["js/qlik"], function (qlik) {
   var app = qlik.openApp("a92e83cb-98b5-4c02-9dad-753067b309bd", config); //open app
 
-  // function appendFn(id) {
-  //   var loaderadd = document.createElement("div");
-  //   loaderadd.classList.add("load");
-  //   loaderadd.id = "loader-" + id;
-  //   document.getElementById(id).appendChild(loaderadd);
-  //   $("#"+id).addClass("load");
-  // }
-
-  // function removeFn(id) {
-  //   var loaderremove = document.getElementById("loader-" + id);
-
-  //   loaderremove.parentNode.removeChild(loaderremove);
-  // }
-
   $(document).ready(function () {
     $("#ob").addClass("load");
 
@@ -375,7 +361,11 @@ require(["js/qlik"], function (qlik) {
           });
         });
     });
-
+    //Bookmark
+    $("#monthdd").change(function () {
+      var val = $("#monthdd").val();
+      console.log(val);
+    });
     //Main-content Switch
     function removeActiveMain() {
       $("#list li").removeClass("activelist");

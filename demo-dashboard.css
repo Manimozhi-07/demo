@@ -16,16 +16,16 @@
   box-sizing: border-box;
   user-select: none;
 }
+html,
 body {
   width: 100%;
   height: 100%;
   background-color: var(--grey);
 }
-/* #wrapper {
-  display: flex;
+#wrapper {
   width: 100%;
   height: 100%;
-} */
+}
 #sidebar {
   padding: 20px;
   width: 13%;
@@ -68,7 +68,6 @@ body {
 #content {
   width: 87%;
   height: 100vh;
-
   position: relative;
   left: 13%;
 }
@@ -137,10 +136,11 @@ body {
 }
 .activemain {
   width: 100%;
+
   height: 90%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   padding: 15px;
 }
 .r {
@@ -148,12 +148,12 @@ body {
   border-radius: 10px;
 }
 .rowh45 {
-  height: 45%;
+  min-height: 45%;
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 .rowh55 {
-  height: 55%;
+  min-height: 55%;
   background-color: var(--white);
 }
 .c {
@@ -161,14 +161,15 @@ body {
   border-radius: 10px;
 }
 .colw70 {
-  width: 70%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 .colw30 {
-  width: 30%;
+  width: 45%;
   background-color: var(--white);
+  padding: 10px;
 }
 
 #kpis {
@@ -182,10 +183,11 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 33.33%;
-  height: 100%;
+  width: 33.3%;
+
   background-color: var(--white);
   border-radius: 10px;
+  padding: 10px;
 }
 .wrap {
   display: flex;
@@ -194,7 +196,6 @@ body {
   flex-direction: column;
 }
 .kpihead {
-  padding: 10px;
   display: flex;
   gap: 10px;
   align-items: center;
@@ -211,7 +212,6 @@ body {
   align-items: center;
   height: 60%;
   width: 100%;
-  padding: 10px;
 }
 .obj {
   width: 70%;
@@ -220,7 +220,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 5px;
 }
 .maindata {
   font-size: 16px;
@@ -232,31 +231,30 @@ body {
 }
 .stock {
   width: 30%;
+
   padding: 5px;
   border-radius: 20px;
   text-align: center;
 }
 .card-header {
-  padding-bottom: 10px;
   font-size: 14px;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
+  align-items: start;
+  height: 20%;
 }
 #monthdd {
   border: none;
   outline: none;
 }
-#monthdd option:hover {
-  background-color: var(--primary);
-}
+
 .wrap-line {
   width: 100%;
-  height: 85%;
+  height: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
 }
 #ob {
   width: 100%;
@@ -264,11 +262,12 @@ body {
 }
 #chart {
   width: 100%;
-  height: 55%;
+  height: 50%;
   background-color: var(--white);
   border-radius: 10px;
   display: flex;
 }
+
 #left {
   width: 35%;
   height: 100%;
@@ -278,14 +277,12 @@ body {
 }
 .wrap-kpi4 {
   width: 100%;
-  height: 35%;
+  height: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 #kpi4 {
-  width: 100%;
-  height: 100%;
   font-weight: bold;
   color: black;
   font-size: 22px;
@@ -295,11 +292,11 @@ body {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  height: 40%;
-  /* gap: 20px; */
+  height: 50%;
+  gap: 20px;
   font-size: 12px;
   color: black;
-  /* padding: 10px; */
+  padding: 10px;
 }
 .head i {
   width: 20px;
@@ -309,10 +306,12 @@ body {
   padding: 4px;
 }
 .dataobj {
-  height: 80%;
+  height: 50%;
   width: 100%;
   font-weight: bold;
+
   padding: 10px;
+  padding-bottom: 0px;
 }
 #second {
   width: 65%;
@@ -347,10 +346,10 @@ body {
 
   padding: 10px;
 }
-#pie {
+/* #pie {
   width: 90% !important;
   height: 90% !important;
-}
+} */
 
 .t {
   font-size: 14px;
@@ -371,15 +370,15 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+
   justify-content: center;
   align-items: center;
-  gap: 15px;
 }
 
 #tabs {
   display: flex;
   padding: 10%;
+  height: 12%;
   gap: 20px;
   font-size: 14px;
   padding: 10px;
@@ -395,7 +394,7 @@ body {
 }
 .activetab-content {
   display: block;
-  height: 90%;
+  height: 88%;
   padding: 10px;
 }
 #summary.activetab-content {
@@ -415,12 +414,12 @@ body {
 #tbl {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   width: 100%;
   height: 100%;
 }
 #tbl tr {
-  height: 20%;
+  height: 22%;
   border-radius: 10px;
   background-color: var(--search);
   width: 100%;
@@ -492,7 +491,7 @@ body {
     transform: rotate(360deg);
   }
 }
-@media screen and (min-width: 1200px) and (max-width: 1550px) {
+/* @media screen and (min-width: 1200px) and (max-width: 1550px) {
   #sidebar {
     width: 16%;
   }
@@ -500,7 +499,7 @@ body {
     width: 84%;
     left: 16%;
   }
-}
+} */
 
 @media screen and (min-width: 1111px) and (max-width: 1199px) {
   #sidebar {
