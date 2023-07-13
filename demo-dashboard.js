@@ -28,22 +28,24 @@ require(["js/qlik"], function (qlik) {
   var app = qlik.openApp("a92e83cb-98b5-4c02-9dad-753067b309bd", config); //open app
 
   $(document).ready(function () {
-    $("#ob").addClass("load");
+    app.getObject("month", "htjUtQ");
 
+    $("#ob").addClass("load");
     app.getObject("ob", "VPZjNP").then(function () {
       $("#ob").removeClass("load");
     });
+
     $("#table").addClass("load");
     app.getObject("table", "pvJDPB").then(function () {
       $("#table").removeClass("load");
     });
+
     $("#chartobj").addClass("load");
     app.getObject("chartobj", "tTZQUX").then(function () {
       $("#chartobj").removeClass("load");
     });
 
     //Data
-
     async function getObj() {
       const response = await fetch("object.json");
       const data = await response.json(); //object
@@ -362,10 +364,101 @@ require(["js/qlik"], function (qlik) {
         });
     });
     //Bookmark
-    $("#monthdd").change(function () {
-      var val = $("#monthdd").val();
+    async function bookmark() {
+      const val = await getObj(); //object ||r data
       console.log(val);
-    });
+      const ob = Object.entries(val["Bookmark"]);
+      $("#monthdd").on("click", function (event) {
+        var val = event.target.value; //event.target-->full HTML
+        ob.forEach(([k, v]) => {
+          if (val === k) {
+            app.bookmark.apply(v);
+          } else {
+            app.field("OrderDate.autoCalendar.Month").clear();
+          }
+        });
+      });
+    }
+    bookmark();
+    //BOOKMARK
+    // app
+    //   .field("OrderDate.autoCalendar.Month")
+    //   .selectValues([4, 5, 6], true, true);
+    // app.bookmark.create("bookmark1").then(function (response) {
+    //   var bookmarkId = response.qReturn.qBookmarkId;
+    // });
+    // var bookmarkList;
+    // var bookmarkId;
+    // app.getList("SnapshotList", function (reply) {
+    //   reply.qBookmarkList.qItems.forEach(function (snapshot) {
+    //     console.log(snapshot.qData.title);
+    //     bookmarkList = snapshot.qData.title;
+    //   });
+    // });
+    // $("#monthdd").on("change", function (event) {
+    //   var val = event.target.value;
+    //   console.log(val);
+    //   if (val === "Q1") {
+    //     app.field("OrderDate.autoCalendar.Month").clear();
+    //     if (bookmarkList.contains("bookmark1")) {
+    //       app.bookmark.apply(bookmarkId);
+    //     }
+    //     app
+    //       .field("OrderDate.autoCalendar.Month")
+    //       .selectValues([4, 5, 6], true, true);
+    //     app.bookmark.create("bookmark1").then(function (response) {
+    //       bookmarkId = response.qReturn.qBookmarkId;
+    //       app.bookmark.apply(bookmarkId);
+    //     });
+    //   } else if (val === "Q2") {
+    //     app.field("OrderDate.autoCalendar.Month").clear();
+    //     if (bookmarkList.contains("bookmark2")) {
+    //       app.bookmark.apply(bookmarkId);
+    //     }
+    //     app
+    //       .field("OrderDate.autoCalendar.Month")
+    //       .selectValues([7, 8, 9], true, true);
+    //     app.bookmark.create("bookmark2").then(function (response) {
+    //       var bookmarkId = response.qReturn.qBookmarkId;
+    //       app.bookmark.apply(bookmarkId);
+    //     });
+    //   } else if (val === "Q3") {
+    //     app.field("OrderDate.autoCalendar.Month").clear();
+    //     if (bookmarkList.contains("bookmark3")) {
+    //       app.bookmark.apply(bookmarkId);
+    //     }
+    //     app
+    //       .field("OrderDate.autoCalendar.Month")
+    //       .selectValues([10, 11, 12], true, true);
+    //     app.bookmark.create("bookmark3").then(function (response) {
+    //       var bookmarkId = response.qReturn.qBookmarkId;
+    //       app.bookmark.apply(bookmarkId);
+    //     });
+    //   } else if (val === "Q4") {
+    //     app.field("OrderDate.autoCalendar.Month").clear();
+    //     if (bookmarkList.contains("bookmark4")) {
+    //       app.bookmark.apply(bookmarkId);
+    //     }
+    //     app
+    //       .field("OrderDate.autoCalendar.Month")
+    //       .selectValues([1, 2, 3], true, true);
+    //     app.bookmark.create("bookmark4").then(function (response) {
+    //       var bookmarkId = response.qReturn.qBookmarkId;
+    //       app.bookmark.apply(bookmarkId);
+    //     });
+    //   } else {
+    //     app.field("OrderDate.autoCalendar.Month").clear();
+    //   }
+    // });
+
+    // var myField = app.field("OrderDate.autoCalendar.Month").getData();
+    // console.log(myField.rows);
+    // myField.OnData.bind(function () {
+    //   myField.rows.forEach(function (row) {
+    //     console.log(row.qText);
+    //   });
+    // });
+
     //Main-content Switch
     function removeActiveMain() {
       $("#list li").removeClass("activelist");

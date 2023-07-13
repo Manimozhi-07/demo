@@ -228,10 +228,16 @@
               <div class="card-header" style="text-align: center">
                 <span>Statistics</span>
                 <select id="monthdd">
-                  <option value="Monthly" disabled="" selected="" hidden="">
-                    Monthly
+                  <option value="Quarters">
+                    <!--disabled="" selected="" hidden=""-->
+                    Quarters
                   </option>
-                  <option value="Jan">Jan</option>
+                  <option value="Q1">Quarter 1</option>
+                  <option value="Q2">Quarter 2</option>
+                  <option value="Q3">Quarter 3</option>
+                  <option value="Q4">Quarter 4</option>
+
+                  <!-- <option value="Jan">Jan</option>
                   <option value="Feb">Feb</option>
                   <option value="Mar">Mar</option>
                   <option value="Apr">Apr</option>
@@ -242,8 +248,9 @@
                   <option value="Sep">Sep</option>
                   <option value="Oct">Oct</option>
                   <option value="Nov">Nov</option>
-                  <option value="Dec">Dec</option>
+                  <option value="Dec">Dec</option> -->
                 </select>
+                <!-- <div id="month" style="width: 90px; height: 30px"></div> -->
               </div>
               <div class="wrap-line">
                 <div class="cont" id="ob"></div>
@@ -263,24 +270,6 @@
               <div class="tabledatacont">
                 <table class="cont" id="tbl"></table>
               </div>
-              <!-- <div id="buttonsdiv">
-                <div class="buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-                <div class="buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-                <div class="buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-                <div class="buttonbox">
-                  <button class="button sellbtn">Sell</button>
-                  <button class="button activebtn">Buy</button>
-                </div>
-              </div> -->
             </div>
             <div class="tab-content" id="table"></div>
             <div class="tab-content" id="chartobj"></div>

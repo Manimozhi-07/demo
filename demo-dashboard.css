@@ -247,6 +247,7 @@ body {
 #monthdd {
   border: none;
   outline: none;
+  color: black;
 }
 
 .wrap-line {
@@ -259,6 +260,12 @@ body {
 #ob {
   width: 100%;
   height: 100%;
+}
+#month {
+  width: 90px;
+  height: 30px;
+  border: none;
+  outline: none;
 }
 #chart {
   width: 100%;

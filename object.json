@@ -1,9 +1,14 @@
 {
-  "Data":{
-    "indicator":"Min(UnitPrice)",
+  "Data": {
+    "indicator": "Min(UnitPrice)",
     "kpi4": "Avg(Sales)",
     "kpi5": "Max(Sales)",
     "kpi6": "Min(Sales)"
-   }
-
+  },
+  "Bookmark": {
+    "Q1": "f2ed6525-0e89-442f-9664-519676a47804",
+    "Q2": "3b8bca82-19a2-403f-925f-946972d25635",
+    "Q3": "20fee7f5-1f61-40e0-9e55-7f2e613d4d82",
+    "Q4": "f0e702c7-8703-4dce-9214-d71b562813ae"
+  }
 }
